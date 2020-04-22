@@ -1,0 +1,39 @@
+= Memo
+
+----
+docker search --filter is-official=true node
+docker pull node:14.0.0-alpine3.11
+docker images
+----
+
+----
+docker run -it -p 3000:3000 --name "node-practice" node:14.0.0-alpine3.11 /bin/ash
+----
+
+.alpine
+----
+apk update
+apk add git
+
+mkdir workrecord
+cd workrecord
+git clone https://github.com/big-gate-0219/workrecord-nuxt.git
+cd workrecord-nuxt/
+npm install
+npm run dev
+----
+
+
+```bash
+# install dependencies
+$ npm install
+
+# serve with hot reload at localhost:3000
+$ npm run dev
+
+# build for production and launch server
+$ npm run build
+$ npm run start
+
+# generate static project
+$ npm run generate
