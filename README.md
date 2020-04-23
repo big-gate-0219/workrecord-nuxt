@@ -2,6 +2,8 @@
 
 > My world-class Nuxt.js project
 
+npm install vue-moment
+
 ## Build Setup
 
 ```bash
