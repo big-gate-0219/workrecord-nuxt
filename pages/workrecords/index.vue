@@ -1,5 +1,17 @@
 <template>
   <div class="section">
+    <div class="container">
+      <div class="field is-grouped is-grouped-centered">
+        <div class="control is-size-4">
+          <button class="button" @click="changeMonth(-1)">&lt;&lt;</button>
+        </div>
+        <div class="control is-size-4">{{year}}/{{paddingLeft2(month)}}</div>
+        <div class="control is-size-4">
+          <button class="button" @click="changeMonth(1)">&gt;&gt;</button>
+        </div>
+      </div>
+    </div>
+
     <div class="table-container">
       <table class="table is-striped is-hoverable">
         <thead>
@@ -49,6 +61,7 @@ export default {
     const payload = {
       uri: ROUTES.GET.MY_WORKRECORD
     };
+    await store.commit("target/reset");
     await store.dispatch("fetchMyWorkrecords", payload);
   },
 
@@ -76,6 +89,9 @@ export default {
         }
       }
       return { date: key, start_of_work: "", end_of_work: "" };
+    },
+    changeMonth(add) {
+      this.$store.commit("target/changeCalendar", add);
     }
   }
 };
