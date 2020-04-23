@@ -4,8 +4,10 @@ export const state = () => ({
     token: '',
     date: '',
     workrecords: [],
+    group: '',
     groups: [],
     groupUsers:[],
+    groupUsersWorkrecords:[],
 })
 
 export const actions = {
@@ -62,6 +64,8 @@ export const mutations = {
         state.groupUsers = payload.users ? payload.users : []
     },
     mutateGroupUsersWorkrecord(state, payload) {
+        state.date = payload.date
+        state.group = payload.group
         state.groupUsersWorkrecords = payload.user_workrecords ? payload.user_workrecords : []
     },
 }
@@ -84,5 +88,8 @@ export const getters = {
     },
     getGroupUsersWorkrecord(state) {
         return state.groupUsersWorkrecords
-    }
+    },
+    getGroup(state) {
+        return state.group
+    },
 }
