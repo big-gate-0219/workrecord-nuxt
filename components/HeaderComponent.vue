@@ -12,7 +12,7 @@
                         <a href="#" class="button is light" @click.prevent="logout">Log out</a>
                     </div>
                     <div class="buttons" v-else>
-                        <nuxt-link class="button is-primary" to="/signup">
+                        <nuxt-link class="button is-primary" to="/accounts/signup">
                             <strong>Sign up</strong>
                         </nuxt-link>
                         <nuxt-link class="button is-light" to="/login">

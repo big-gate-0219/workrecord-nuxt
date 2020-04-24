@@ -11,6 +11,11 @@ export const state = () => ({
 })
 
 export const actions = {
+    async signup({commit}, payload) {
+        const client = createRequestClient(this.$axios, this.$cookies, this)
+        const res = await client.post(payload.uri, payload.params)
+        this.app.router.push("/login")
+    },
     async login({commit}, payload) {
         const client = createRequestClient(this.$axios, this.$cookies, this)
         const res = await client.post(payload.uri, payload.params)
