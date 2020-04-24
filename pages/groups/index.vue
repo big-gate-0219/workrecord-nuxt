@@ -7,6 +7,8 @@
                 <nuxt-link :to="`/workrecords/groups/${group.group_id}`">{{group.group_name}}</nuxt-link>
             </li>
         </ul>
+
+        <nuxt-link to="groups/register" class="button is-info">Add Group</nuxt-link>
     </div>
 </template>
 

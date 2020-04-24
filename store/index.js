@@ -33,6 +33,11 @@ export const actions = {
         const res = await client.get(payload.uri)
         commit('mutateMyWorkrecords', res)
     },
+    async registerNewGroup({commit}, payload) {
+        const client = createRequestClient(this.$axios, this.$cookies, this)
+        const res = await client.post(payload.uri, payload.params)
+        this.app.router.push("/groups")
+    },
     async fetchMyGroups({commit}, payload) {
         const client = createRequestClient(this.$axios, this.$cookies, this)
         const res = await client.get(payload.uri)
