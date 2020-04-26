@@ -8,6 +8,7 @@ export const state = () => ({
     groups: [],
     groupUsers:[],
     groupUsersWorkrecords:[],
+    accounts:[],
 })
 
 export const actions = {
@@ -57,7 +58,11 @@ export const actions = {
         this.$cookies.set('jwt_token', payload)
         commit('mutateToken', payload)
     },
-
+    async fetchAccounts({commit}, payload) {
+        const client = createRequestClient(this.$axios, this.$cookies, this)
+        const res = await client.get(payload.uri, payload.params)
+        commit('mutateAccounts', res.Users)
+    }
 }
 
 export const mutations = {
@@ -78,6 +83,9 @@ export const mutations = {
         state.group = payload.group
         state.groupUsersWorkrecords = payload.user_workrecords ? payload.user_workrecords : []
     },
+    mutateAccounts(state, payload) {
+        state.accounts = payload
+    }
 }
 
 export const getters = {
@@ -102,4 +110,7 @@ export const getters = {
     getGroup(state) {
         return state.group
     },
+    getAccounts(state) {
+        return state.accounts
+    }
 }

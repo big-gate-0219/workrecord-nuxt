@@ -1,5 +1,6 @@
 export const ROUTES = {
     GET: {
+        ACCOUNTS: '/api/accounts',
         MY_WORKRECORD: '/api/work-records',
         MY_GROUPS: '/api/groups',
         GROUP_USERS: 'api/groups/:group_id',
