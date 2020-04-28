@@ -34,8 +34,8 @@ import ROUTES from '~/routes/api'
 export default {
     data() {
         return {
-            userId: "test1@mail.com",
-            password: "password",
+            userId: "",
+            password: "",
         }
     },
 
