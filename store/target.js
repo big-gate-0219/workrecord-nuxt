@@ -1,7 +1,7 @@
 export const state = () => ({
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
-    today: new Date().getDay(),
+    day: new Date().getDate(),
 })
 
 export const mutations = {
@@ -16,9 +16,17 @@ export const mutations = {
             state.month += add
         }
     },
+    addDay(state, add) {
+        let wkDate = new Date(state.year, state.month - 1, state.day, 0, 0, 0, 0)
+        wkDate.setDate(wkDate.getDate() + add)
+        state.year = wkDate.getFullYear()
+        state.month = wkDate.getMonth() + 1
+        state.day = wkDate.getDate()
+
+    },
     reset(state) {
-        state.year =  new Date().getFullYear()
+        state.year = new Date().getFullYear()
         state.month = new Date().getMonth() + 1
-        state.today = new Date().getDay()
+        state.day = new Date().getDate()
     }
 }

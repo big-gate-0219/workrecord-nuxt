@@ -4,8 +4,16 @@
       <div class="field">
         <button class="button is-info" @click="openAddMemberWindow">Add Member</button>
       </div>
+      <div class="field is-grouped is-grouped-right">
+        <div class="control is-size-4">
+          <button class="button" @click="changeDay(-1)">&lt;&lt;</button>
+        </div>
+        <div class="control is-size-4">{{year}}/{{paddingLeft2(month)}}/{{paddingLeft2(day)}}({{getDayOfWeek(day)}})</div>
+        <div class="control is-size-4">
+          <button class="button" @click="changeDay(+1)">&gt;&gt;</button>
+        </div>
+      </div>
       <div class="field is-size-3 has-text-centered">{{group.group_name}}</div>
-      <div class="field is-size-4 has-text-right">{{currentDate}}</div>
     </div>
 
     <div class="table-container">
@@ -97,8 +105,14 @@ export default {
     };
   },
   computed: {
-    currentDate() {
-      return this.$store.getters.getDate;
+    year() {
+      return this.$store.state.target.year;
+    },
+    month() {
+      return this.$store.state.target.month;
+    },
+    day() {
+      return this.$store.state.target.day;
     },
     group() {
       return this.$store.getters.getGroup;
@@ -112,6 +126,7 @@ export default {
   },
 
   async fetch({ store, route }) {
+    await store.commit("target/reset");
     await store.dispatch("fetchGroupUsersWorkrecord", {
       uri: ROUTES.GET.GROUP_USERS_WORKRECORD.replace(
         ":group_id",
@@ -121,6 +136,27 @@ export default {
   },
 
   methods: {
+    paddingLeft2(value) {
+      return ("0" + value).slice(-2);
+    },
+    getDayOfWeek(day) {
+      const week = ["日", "月", "火", "水", "木", "金", "土"];
+      const year = this.$store.state.target.year;
+      const month = this.$store.state.target.month;
+      const firstOfWeek = new Date(year, month - 1, 1).getDay() - 1;
+      return week[(firstOfWeek + day) % 7];
+    },
+    changeDay(add) {
+      this.$store.commit("target/addDay", add);
+      const payload= {
+        uri: ROUTES.GET.GROUP_WORKRECORDS
+          .replace(":group_id", this.$store.getters.getGroup.group_id)
+          .replace(":year", this.$store.state.target.year)
+          .replace(":month", this.$store.state.target.month)
+          .replace(":day", this.$store.state.target.day)
+      }
+      this.$store.dispatch('fetchGroupWorkrecords', payload)
+    },
     openAddMemberWindow() {
       this.isUserAddedModalActive = true;
     },
