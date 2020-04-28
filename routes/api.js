@@ -4,7 +4,8 @@ export const ROUTES = {
         MY_WORKRECORD: '/api/work-records',
         MY_GROUPS: '/api/groups',
         GROUP_USERS: 'api/groups/:group_id',
-        GROUP_USERS_WORKRECORD: 'api/work-records/groups/:group_id/today'
+        GROUP_USERS_WORKRECORD: 'api/work-records/groups/:group_id/today',
+        GROUP_WORKRECORDS: 'api/work-records/groups/:group_id/:year/:month/:day'
     },
     POST: {
         LOGIN: '/api/accounts/signin',
