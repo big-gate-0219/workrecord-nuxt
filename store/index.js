@@ -62,6 +62,10 @@ export const actions = {
         const client = createRequestClient(this.$axios, this.$cookies, this)
         const res = await client.get(payload.uri, payload.params)
         commit('mutateAccounts', res.Users)
+    },
+    async addUserToGroup({commit}, payload) {
+        const client = createRequestClient(this.$axios, this.$cookies, this)
+        await client.post(payload.uri, payload.params)
     }
 }
 

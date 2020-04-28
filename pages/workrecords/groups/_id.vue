@@ -136,8 +136,23 @@ export default {
       };
       this.$store.dispatch("fetchAccounts", payload);
     },
-    addGroupMember() {
-      console.log(this.selected_user_id)
+    addGroupMember({ route }) {
+      const groupId = this.$store.getters.getGroup.group_id;
+      const payload1 = {
+        uri: ROUTES.POST.ADD_MEMBER_TO_GROUP.replace(":group_id", groupId),
+        params: {
+          user_id: this.selected_user_id
+        }
+      };
+      const payload2 = {
+        uri: ROUTES.GET.GROUP_USERS_WORKRECORD.replace(":group_id", groupId)
+      };
+
+      this.$store.dispatch("addUserToGroup", payload1).then(() => {
+        this.$store.dispatch("fetchGroupUsersWorkrecord", payload2).then(() => {
+          this.isUserAddedModalActive = false;
+        });
+      });
     }
   }
 };
