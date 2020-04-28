@@ -1,5 +1,6 @@
 export const ROUTES = {
     GET: {
+        ACCOUNTS: '/api/accounts',
         MY_WORKRECORD: '/api/work-records',
         MY_GROUPS: '/api/groups',
         GROUP_USERS: 'api/groups/:group_id',
@@ -11,6 +12,7 @@ export const ROUTES = {
         START_WORK: '/api/work-records/today/start',
         END_WORK: '/api/work-records/today/end',
         REGISTER_NEW_GROUP: '/api/groups',
+        ADD_MEMBER_TO_GROUP: '/api/groups/:group_id/add-member',
     }
 };
 
