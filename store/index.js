@@ -22,7 +22,7 @@ export const actions = {
         const res = await client.post(payload.uri, payload.params)
         this.$cookies.set('jwt_token', res.token)
         commit('mutateToken', res.token)
-        this.app.router.push('/workrecords')
+        this.app.router.push('/workrecords/register')
     },
     async logout({commit}) {
         commit('mutateToken', null)
