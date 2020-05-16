@@ -1,9 +1,9 @@
+import Vue from 'vue'
 import { createRequestClient } from '~/store/request-client';
 import * as MessageUtility from '~/store/message-utility'
 
 export const state = () => ({
-    user_id_error_message: "",
-    password_error_message: "",
+    field_error_messages: {},
 })
 
 export const actions = {
@@ -16,54 +16,33 @@ export const actions = {
             this.app.router.push('/workrecords/register')
             return
         } else if(res.isRequestError()) {
-            let err
-            if (err = getError(res.data.errors, "user_id")) {
-                const message = MessageUtility.createFieldErrorMessage(err.type, err.field)
-                commit('mutateUserIdErrorMessage', message)
-            } else {
-                commit('mutateUserIdErrorMessage', '')
-            }
-
-            if (err = getError(res.data.errors, "password")) {
-                const message = MessageUtility.createFieldErrorMessage(err.type, err.field)
-                commit('mutatePasswordErrorMessage', message)
-            } else {
-                commit('mutatePasswordErrorMessage', '')
+            const fields = ["user_id", "password"]
+            commit('mutateClearFieldErrorMessage')
+            for (const err of res.data.errors) {
+                if (fields.includes(err.field)) {
+                    const message = MessageUtility.createFieldErrorMessage(err.type, err.field)
+                    commit('mutateFieldErrorMessage', {field: err.field, message: message})
+                }
             }
             return
         }
     },
 }
 
-function getError(errors, field) {
-    for (var err of errors) {
-        if (err.field === field) {
-            return err
-        }
-    }
-    return null
-}
-
 export const mutations = {
-    mutateUserIdErrorMessage(state, payload) {
-        state.user_id_error_message = payload
+    mutateClearFieldErrorMessage(state) {
+        state.field_error_messages = {}
     },
-    mutatePasswordErrorMessage(state, payload) {
-        state.password_error_message = payload
+    mutateFieldErrorMessage(state, payload) {
+        Vue.set(state.field_error_messages, payload.field, payload.message)
     },
 }
 
 export const getters = {
-    hasUserIdErrorMessage(state) {
-        return !!state.user_id_error_message
-    },
     getUserIdErrorMessage(state) {
-        return state.user_id_error_message
-    },
-    hasPasswordErrorMessage(state) {
-        return !!state.password_error_message
+        return state.field_error_messages['user_id']
     },
     getPasswordErrorMessage(state) {
-        return state.password_error_message
+        return state.field_error_messages['password']
     },
 }

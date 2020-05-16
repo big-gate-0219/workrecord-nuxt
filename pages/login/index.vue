@@ -47,13 +47,13 @@ export default {
 
   computed: {
       hasUserIdErrorMessage() {
-          return this.$store.getters['login/hasUserIdErrorMessage']
+          return !!this.$store.getters['login/getUserIdErrorMessage']
       },
       getUserIdErrorMessage() {
           return this.$store.getters['login/getUserIdErrorMessage']
       },
       hasPasswordErrorMessage() {
-          return this.$store.getters['login/hasPasswordErrorMessage']
+          return !!this.$store.getters['login/getPasswordErrorMessage']
       },
       getPasswordErrorMessage() {
           return this.$store.getters['login/getPasswordErrorMessage']
