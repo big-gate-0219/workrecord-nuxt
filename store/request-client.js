@@ -12,22 +12,38 @@ export class RequestClient {
         const queryString = Object.keys(params).map(key => key + '=' + params[key]).join('&');
         const query = queryString.length > 0 ? `${uri}?${queryString}` : uri
         return await this.axios.$get(query)
-            .catch(err => {
-                return this.retry(err)
-            })
+        .then(response => {
+            return new Response(200, response)
+        })
+        .catch(err => {
+            return new Response(err.response.status, err.response.data)
+        })
     }
 
     async post(uri, params = {}) {
         return await this.axios.$post(uri, params)
+            .then(response => {
+                return new Response(200, response)
+            })
             .catch(err => {
-                return this.retry(err)
+                return new Response(err.response.status, err.response.data)
             })
     }
-
-    async retry(err) {
-        const code = parseInt(err.response && err.response.status)
-        console.log(code)
+}
+export class Response {
+    constructor(status, data) {
+        this.status = status
+        this.data = data
     }
+
+    isSuccess() {
+        return this.status == 200
+    }
+
+    isRequestError() {
+        return this.status == 400 || this.status == 401
+    }
+
 }
 
 export function createRequestClient(axios, cookies, store) {

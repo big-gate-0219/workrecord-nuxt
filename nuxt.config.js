@@ -31,6 +31,7 @@ export default {
     '~/plugins/axios',
     '~/plugins/cookies-to-state',
     '~/plugins/vue-moment',
+    '~/plugins/i18n'
   ],
   /*
   ** Nuxt.js dev-modules

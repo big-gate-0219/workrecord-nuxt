@@ -1,0 +1,21 @@
+{
+    "error": {
+        "required": "[0] を入力してください。"
+    },
+    "warn": {
+
+    },
+    "info": {
+
+    },
+    "confirm": {
+
+    },
+    "placeHolder": {
+        "user_id": "ユーザID",
+        "password": "パスワード"
+    },
+    "tooltip": {
+
+    }
+}

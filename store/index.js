@@ -1,4 +1,4 @@
-import {createRequestClient} from '~/store/request-client';
+import { createRequestClient } from '~/store/request-client';
 
 export const state = () => ({
     token: '',
@@ -6,68 +6,62 @@ export const state = () => ({
     workrecords: [],
     group: '',
     groups: [],
-    groupUsers:[],
-    groupUsersWorkrecords:[],
-    accounts:[],
+    groupUsers: [],
+    groupUsersWorkrecords: [],
+    accounts: [],
+    errors: [],
 })
 
 export const actions = {
-    async signup({commit}, payload) {
+    async signup({ commit }, payload) {
         const client = createRequestClient(this.$axios, this.$cookies, this)
         const res = await client.post(payload.uri, payload.params)
         this.app.router.push("/login")
     },
-    async login({commit}, payload) {
-        const client = createRequestClient(this.$axios, this.$cookies, this)
-        const res = await client.post(payload.uri, payload.params)
-        this.$cookies.set('jwt_token', res.token)
-        commit('mutateToken', res.token)
-        this.app.router.push('/workrecords/register')
-    },
-    async logout({commit}) {
+    async logout({ commit }) {
         commit('mutateToken', null)
         this.$cookies.remove('jwt_token')
         this.app.router.push('/')
     },
-    async fetchMyWorkrecords({commit}, payload) {
+    async fetchMyWorkrecords({ commit }, payload) {
         const client = createRequestClient(this.$axios, this.$cookies, this)
         const res = await client.get(payload.uri)
         commit('mutateMyWorkrecords', res)
     },
-    async registerNewGroup({commit}, payload) {
+    async registerNewGroup({ commit }, payload) {
         const client = createRequestClient(this.$axios, this.$cookies, this)
         const res = await client.post(payload.uri, payload.params)
         this.app.router.push("/groups")
     },
-    async fetchMyGroups({commit}, payload) {
+    async fetchMyGroups({ commit }, payload) {
         const client = createRequestClient(this.$axios, this.$cookies, this)
         const res = await client.get(payload.uri)
         commit('mutateMyGroups', res)
     },
-    async fetchGroupUsers({commit}, payload) {
+    async fetchGroupUsers({ commit }, payload) {
         const client = createRequestClient(this.$axios, this.$cookies, this)
         const res = await client.get(payload.uri)
         commit('mutateGroupUsers', res)
     },
-    async fetchGroupUsersWorkrecord({commit}, payload) {
+    async fetchGroupUsersWorkrecord({ commit }, payload) {
         const client = createRequestClient(this.$axios, this.$cookies, this)
         const res = await client.get(payload.uri)
         commit('mutateGroupUsersWorkrecord', res)
     },
-    async setToken({commit}, payload) {
+    async setToken({ commit }, payload) {
         this.$cookies.set('jwt_token', payload)
         commit('mutateToken', payload)
     },
-    async fetchAccounts({commit}, payload) {
+    async fetchAccounts({ commit }, payload) {
         const client = createRequestClient(this.$axios, this.$cookies, this)
         const res = await client.get(payload.uri, payload.params)
         commit('mutateAccounts', res.Users)
     },
-    async addUserToGroup({commit}, payload) {
+    async addUserToGroup({ commit }, payload) {
         const client = createRequestClient(this.$axios, this.$cookies, this)
         const res = await client.post(payload.uri, payload.params)
     },
-    async fetchGroupWorkrecords({commit}, payload) {
+    async fetchGroupWorkrecords({ commit }, payload) {
         const client = createRequestClient(this.$axios, this.$cookies, this)
         const res = await client.get(payload.uri, payload.params)
         commit('mutateGroupUsersWorkrecord', res)
@@ -94,6 +88,9 @@ export const mutations = {
     },
     mutateAccounts(state, payload) {
         state.accounts = payload
+    },
+    mutateErrors(state, payload) {
+        state.errors = payload
     }
 }
 
@@ -121,5 +118,8 @@ export const getters = {
     },
     getAccounts(state) {
         return state.accounts
+    },
+    getErrors(state) {
+        return state.errors
     }
 }
