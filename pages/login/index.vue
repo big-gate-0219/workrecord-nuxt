@@ -2,7 +2,11 @@
     <div class="section">
         <div class="columns">
             <div class="column is-6">
-
+                <div class="field" v-show="hasErrorMessages">
+                    <div class="help is-danger" v-for="err in getErrorMessages">
+                        {{ err }}
+                    </div>
+                </div>
                 <div class="field">
                     <label for="user-id" class="label">User ID</label>
                     <div class="control">
@@ -58,6 +62,13 @@ export default {
       getPasswordErrorMessage() {
           return this.$store.getters['login/getPasswordErrorMessage']
       },
+      hasErrorMessages() {
+          return this.$store.getters['login/getErrorMessages'].length != 0
+      },
+      getErrorMessages() {
+          return this.$store.getters['login/getErrorMessages']
+      },
+
     },
 
     methods: {
@@ -71,15 +82,6 @@ export default {
             }
             this.$store.dispatch('login/login', payload)
         },
-        hasErrorInUserID(name) {
-            for (const error in errors) {
-                console.log(error)
-                if (error.field = "user_id") {
-                    return true
-                }
-            }
-            return false
-        }
     }
 }
 </script>

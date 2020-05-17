@@ -3,6 +3,7 @@ import { createRequestClient } from '~/store/request-client';
 import * as MessageUtility from '~/store/message-utility'
 
 export const state = () => ({
+    error_messages: [],
     field_error_messages: {},
 })
 
@@ -17,13 +18,18 @@ export const actions = {
             return
         } else if(res.isRequestError()) {
             const fields = ["user_id", "password"]
+            const error_messages = []
             commit('mutateClearFieldErrorMessage')
             for (const err of res.data.errors) {
                 if (fields.includes(err.field)) {
                     const message = MessageUtility.createFieldErrorMessage(err.type, err.field)
                     commit('mutateFieldErrorMessage', {field: err.field, message: message})
+                } else {
+                    const message = MessageUtility.createErrorMessage(err.type)
+                    error_messages.push(message)
                 }
             }
+            commit('mutateErrorMessages',error_messages)
             return
         }
     },
@@ -36,6 +42,9 @@ export const mutations = {
     mutateFieldErrorMessage(state, payload) {
         Vue.set(state.field_error_messages, payload.field, payload.message)
     },
+    mutateErrorMessages(state, payload) {
+        state.error_messages = payload
+    },
 }
 
 export const getters = {
@@ -44,5 +53,8 @@ export const getters = {
     },
     getPasswordErrorMessage(state) {
         return state.field_error_messages['password']
+    },
+    getErrorMessages(state) {
+        return state.error_messages
     },
 }

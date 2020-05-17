@@ -1,6 +1,7 @@
 {
     "error": {
-        "required": "[0] を入力してください。"
+        "required": "[0] を入力してください。",
+        "unauthorized":  "ユーザID もしくは パスワードが間違っています。"
     },
     "warn": {
 

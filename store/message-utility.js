@@ -11,6 +11,11 @@ export function createFieldErrorMessage(type, field, args) {
     return ''
 }
 
+export function createErrorMessage(type, arg) {
+    const baseMessage = i18n.tc('error.' + type)
+    return baseMessage
+}
+
 
 export function editMessage(baseMessage, args) {
     if (isNotParam(baseMessage)) {
