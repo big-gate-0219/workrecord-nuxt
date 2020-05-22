@@ -13,11 +13,6 @@ export const state = () => ({
 })
 
 export const actions = {
-    async signup({ commit }, payload) {
-        const client = createRequestClient(this.$axios, this.$cookies, this)
-        const res = await client.post(payload.uri, payload.params)
-        this.app.router.push("/login")
-    },
     async logout({ commit }) {
         commit('mutateToken', null)
         this.$cookies.remove('jwt_token')

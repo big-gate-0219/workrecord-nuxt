@@ -1,7 +1,13 @@
 {
     "error": {
         "required": "[0] を入力してください。",
-        "unauthorized":  "ユーザID もしくは パスワードが間違っています。"
+        "min": "[0] は、[1]文字以上で入力してください。",
+        "max": "[0] は、[1]文字以下で入力してください。",
+        "email": "[0] は、xxx@xxx.xxの形式で入力してください。",
+        "excludesall": "[0]には、[1]の文字を使えません。",
+
+        "unauthorized":  "ユーザID もしくは パスワードが間違っています。",
+        "user_id_already_exists": "既に登録されているユーザIDです。違うユーザIDをお試しください。"
     },
     "warn": {
 
@@ -14,6 +20,9 @@
     },
     "placeHolder": {
         "user_id": "ユーザID",
+        "userId": "ユーザID",
+        "email": "メールアドレス",
+        "userName": "ユーザー名",
         "password": "パスワード"
     },
     "tooltip": {

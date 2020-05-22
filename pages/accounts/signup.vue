@@ -5,6 +5,10 @@
         <div class="container">
           <h1>Sign up</h1>
 
+          <div class="field" v-show="hasErrorMessages">
+            <div class="help is-danger" v-for="err in getErrorMessages">{{ err }}</div>
+          </div>
+
           <div class="field">
             <label for="user-id" class="label">User ID</label>
             <div class="control">
@@ -16,6 +20,7 @@
                 placeholder="User ID"
               />
             </div>
+            <div class="help is-danger" v-show="hasUserIdErrorMessage">{{ getUserIdErrorMessage}}</div>
           </div>
 
           <div class="field">
@@ -29,6 +34,10 @@
                 placeholder="User name"
               />
             </div>
+            <div
+              class="help is-danger"
+              v-show="hasUserNameErrorMessage"
+            >{{ getUserNameErrorMessage}}</div>
           </div>
 
           <div class="field">
@@ -42,6 +51,7 @@
                 placeholder="Email"
               />
             </div>
+            <div class="help is-danger" v-show="hasEmailErrorMessage">{{ getEmailErrorMessage}}</div>
           </div>
 
           <div class="field">
@@ -55,6 +65,10 @@
                 placeholder="Password"
               />
             </div>
+            <div
+              class="help is-danger"
+              v-show="hasPasswordErrorMessage"
+            >{{ getPasswordErrorMessage}}</div>
           </div>
 
           <div class="field">
@@ -69,7 +83,7 @@
 </template>
 
 <script>
-import ROUTES from '~/routes/api'
+import ROUTES from "~/routes/api";
 
 export default {
   data() {
@@ -80,6 +94,40 @@ export default {
       password: ""
     };
   },
+
+  computed: {
+    hasUserIdErrorMessage() {
+      return !!this.$store.getters["signup/getFieldErrorMessage"]("userId");
+    },
+    getUserIdErrorMessage() {
+      return this.$store.getters["signup/getFieldErrorMessage"]("userId");
+    },
+    hasUserNameErrorMessage() {
+      return !!this.$store.getters["signup/getFieldErrorMessage"]("userName");
+    },
+    getUserNameErrorMessage() {
+      return this.$store.getters["signup/getFieldErrorMessage"]("userName");
+    },
+    hasEmailErrorMessage() {
+      return !!this.$store.getters["signup/getFieldErrorMessage"]("email");
+    },
+    getEmailErrorMessage() {
+      return this.$store.getters["signup/getFieldErrorMessage"]("email");
+    },
+    hasPasswordErrorMessage() {
+      return !!this.$store.getters["signup/getFieldErrorMessage"]("password");
+    },
+    getPasswordErrorMessage() {
+      return this.$store.getters["signup/getFieldErrorMessage"]("password");
+    },
+    hasErrorMessages() {
+      return this.$store.getters["signup/getErrorMessages"].length != 0;
+    },
+    getErrorMessages() {
+      return this.$store.getters["signup/getErrorMessages"];
+    }
+  },
+
   methods: {
     signup() {
       const payload = {
@@ -91,7 +139,7 @@ export default {
           password: this.password
         }
       };
-      this.$store.dispatch('signup', payload);
+      this.$store.dispatch("signup/signup", payload);
     }
   }
 };

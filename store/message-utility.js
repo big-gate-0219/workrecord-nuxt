@@ -2,10 +2,17 @@
 import { i18n }  from '~/plugins/i18n';
 
 export function createFieldErrorMessage(type, field, args) {
-    if (type === "required") {
+    if (type === "required" || type ==="email") {
         const baseMessage = i18n.tc('error.' + type)
-        const args = [i18n.tc('placeHolder.' + field)]
-        return editMessage(baseMessage, args)
+        const placeHolders = [i18n.tc('placeHolder.' + field)]
+        return editMessage(baseMessage, placeHolders)
+    } else if (type ==="min" || type === "max" || type === "excludesall") {
+        const baseMessage = i18n.tc('error.' + type)
+        const placeHolders = [
+            i18n.tc('placeHolder.' + field),
+            args,
+        ]
+        return editMessage(baseMessage, placeHolders)
     }
 
     return ''
@@ -28,6 +35,7 @@ export function editMessage(baseMessage, args) {
 
     let message = baseMessage
     for (let i = 0; i < args.length; i++) {
+        console.log(args[i])
         message = message.replace('[' + i + ']', args[i])
     }
 
